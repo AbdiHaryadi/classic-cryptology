@@ -157,7 +157,7 @@ class HillCipher:
             inverseDet = self.moduloInverse(det, divisor)
             # matriks
             res = np.array([ [A, D, G], [B, E, H], [C, F, I] ])
-            print('cek res', res)
+            
 
         return (inverseDet*res).astype(int)
 
@@ -165,10 +165,10 @@ if __name__ == "__main__":
     # enkripsi testing
 
     # 3*3
-    test = HillCipher(plain=['p','a','y','m','o','r','e','m','o','n','e','y'], key=[[17,17,5],[21,18,21],[2,2,19]])
-    print(test.getPlain())
-    test.doEncryptAll()
-    print(test.getCypher())
+    # test = HillCipher(plain=['p','a','y','m','o','r','e','m','o','n','e','y'], key=[[17,17,5],[21,18,21],[2,2,19]])
+    # print(test.getPlain())
+    # test.doEncryptAll()
+    # print(test.getCypher())
 
     # 2*2
     # test = HillCipher(plain=['p','a','y','m'], key=[[17,17],[21,18]])
@@ -179,10 +179,10 @@ if __name__ == "__main__":
     # deskripsi testing
 
     # 3*3
-    # test = HillCipher(cypher=['l','n','s'], key=[[17,17,5],[21,18,21],[2,2,19]])
-    # print(test.getCypher())
-    # test.doDecryptAll()
-    # print(test.getPlain())
+    test = HillCipher(cypher=['l','n','s','h','d','l','e','w','m','t','r','w'], key=[[17,17,5],[21,18,21],[2,2,19]])
+    print(test.getCypher())
+    test.doDecryptAll()
+    print(test.getPlain())
 
     # 2*2
     # test = HillCipher(cypher=['v','d','o','s'], key=[[17,17],[21,18]])
