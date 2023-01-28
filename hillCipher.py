@@ -165,7 +165,11 @@ if __name__ == "__main__":
     # enkripsi testing
 
     # 3*3
-    # test = HillCipher(['p','a','y','m','o','r','e','m','o','n','e','y'], [[17,17,5],[21,18,21],[2,2,19]])
+    test = HillCipher(plain=['p','a','y','m','o','r','e','m','o','n','e','y'], key=[[17,17,5],[21,18,21],[2,2,19]])
+    print(test.getPlain())
+    test.doEncryptAll()
+    print(test.getCypher())
+
     # 2*2
     # test = HillCipher(plain=['p','a','y','m'], key=[[17,17],[21,18]])
     # print(test.getPlain())
@@ -181,7 +185,7 @@ if __name__ == "__main__":
     # print(test.getPlain())
 
     # 2*2
-    test = HillCipher(cypher=['v','d','o','s'], key=[[17,17],[21,18]])
-    print(test.getCypher())
-    test.doDecryptAll()
-    print(test.getPlain())
+    # test = HillCipher(cypher=['v','d','o','s'], key=[[17,17],[21,18]])
+    # print(test.getCypher())
+    # test.doDecryptAll()
+    # print(test.getPlain())
