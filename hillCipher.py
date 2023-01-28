@@ -53,8 +53,7 @@ class HillCipher:
 
 
     def decrypt(self, partialCypher):
-        print('inv', inv(self.key))
-        return np.matmul(inv(self.key),partialCypher.transpose())%26
+        return np.matmul(self.matrixInverseModulo(matrix=self.key, divisor=26), partialCypher.transpose())%26
     
     def doDecryptAll(self):
         # mendecrypt per maxPartisi huruf
@@ -69,7 +68,7 @@ class HillCipher:
             count+=1
             if (count == self.maxPartisi):
                 # lakukan decrypt partial dan append ke array derypt
-                partialCypherNum = self.convertAllAlphaToNum(partisi)
+                partialCypherNum = self.convertAllAlphaToNum(partisi).astype(int)
                 plainNum = np.append(plainNum, self.decrypt(partialCypherNum))
                 # hapus count dan kosongkan partisi
                 count = 0
@@ -125,27 +124,64 @@ class HillCipher:
 
         return str
     
+    def moduloInverse(self, dividend, divisor):
+        return pow(dividend,-1,divisor)
+    
+    def matrixInverseModulo(self, matrix, divisor):
+        # inisiasi
+        inverseDet = None
+        res = np.array([])
+        # cek panjang matrix (buat penyesuaian method invers)
+        if (len(matrix) == 2):
+            # dapatkan det(matrix)
+            det = matrix[0][0]*matrix[1][1] - matrix[1][0]*matrix[0][1]
+            # inverse Det dengan divisor
+            inverseDet = self.moduloInverse(det, divisor)
+            # matriks
+            res = np.array([ [matrix[1][1], -matrix[0][1]], [-matrix[1][0], matrix[0][0]] ])
 
-# enkripsi testing
+        if (len(matrix) == 3):
+            # method crammer
+            A = matrix[1][1]*matrix[2][2] - matrix[2][1]*matrix[1][2]
+            B = -(matrix[1][0]*matrix[2][2] - matrix[1][2]*matrix[2][0])
+            C = matrix[1][0]*matrix[2][1] - matrix[1][1]*matrix[2][0]
+            D = -(matrix[0][1]*matrix[2][2] - matrix[2][1]*matrix[0][2])
+            E = matrix[0][0]*matrix[2][2]-matrix[0][2]*matrix[2][0]
+            F = -(matrix[0][0]*matrix[2][1] - matrix[0][1]*matrix[2][0])
+            G = matrix[0][1]*matrix[1][2] - matrix[1][1]*matrix[0][2]
+            H = -(matrix[0][0]*matrix[1][2] - matrix[0][2]*matrix[1][0])
+            I = matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0]
+            # dapatkan det(matrix)
+            det = matrix[0][0]*A + matrix[0][1]*B + matrix[0][2]*C
+            # inverse Det dengan divisor
+            inverseDet = self.moduloInverse(det, divisor)
+            # matriks
+            res = np.array([ [A, D, G], [B, E, H], [C, F, I] ])
+            print('cek res', res)
 
-# 3*3
-# test = HillCipher(['p','a','y','m','o','r','e','m','o','n','e','y'], [[17,17,5],[21,18,21],[2,2,19]])
-# 2*2
-# test = HillCipher(plain=['p','a','y','m'], key=[[17,17],[21,18]])
-# print(test.getPlain())
-# test.doEncryptAll()
-# print(test.getCypher())
+        return (inverseDet*res).astype(int)
 
-# deskripsi testing
+if __name__ == "__main__":
+    # enkripsi testing
 
-# 3*3
-test = HillCipher(cypher=['l','n','s'], key=[[17,17,5],[21,18,21],[2,2,19]])
-print(test.getCypher())
-test.doDecryptAll()
-print(test.getPlain())
+    # 3*3
+    # test = HillCipher(['p','a','y','m','o','r','e','m','o','n','e','y'], [[17,17,5],[21,18,21],[2,2,19]])
+    # 2*2
+    # test = HillCipher(plain=['p','a','y','m'], key=[[17,17],[21,18]])
+    # print(test.getPlain())
+    # test.doEncryptAll()
+    # print(test.getCypher())
 
-# 2*2
-# test = HillCipher(cypher=['v','d','o','s'], key=[[17,17],[21,18]])
-# print(test.getCypher())
-# test.doDecryptAll()
-# print(test.getPlain())
+    # deskripsi testing
+
+    # 3*3
+    # test = HillCipher(cypher=['l','n','s'], key=[[17,17,5],[21,18,21],[2,2,19]])
+    # print(test.getCypher())
+    # test.doDecryptAll()
+    # print(test.getPlain())
+
+    # 2*2
+    test = HillCipher(cypher=['v','d','o','s'], key=[[17,17],[21,18]])
+    print(test.getCypher())
+    test.doDecryptAll()
+    print(test.getPlain())
