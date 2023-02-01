@@ -9,9 +9,7 @@
 <body>
     <div>
         <h3>Output</h3>
-        <a href="style.css" download>
-            <button>Download</button>
-        </a>
+        <a href="{{ url_for('download_file') }}">{{ filename }}</a><br />
     </div>
 </body>
 </html>

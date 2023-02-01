@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- CSS Stylesheet -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        {% block head %}{% endblock %}
+    </head>
+
+    <body>
+        <!-- Bootstrap NavBar -->
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="/">
+                <span class="menu-collapsed">Cypher</span>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <!-- This menu is hidden in bigger devices with d-sm-none. 
+                The sidebar isn't proper for smaller screens imo, so this dropdown menu can keep all the useful sidebar itens exclusively for smaller screens  -->
+                    <li class="nav-item dropdown d-sm-block d-md-none">
+                        <a class="nav-link dropdown-toggle" href="#" id="smallerscreenmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Menu </a>
+                        <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                            <a class="dropdown-item" href="/vigenere/standard/encrypt">Standard Vigenere Cipher</a>
+                            <a class="dropdown-item" href="/vigenere/full/encrypt">Full Vigenere Cipher</a>
+                            <a class="dropdown-item" href="/vigenere/autokey/encrypt">Auto Key Vigenere Cipher</a>
+                            <a class="dropdown-item" href="/vigenere/extended/encrypt">Extended Vigenere Cipher</a>
+                            <a class="dropdown-item" href="/playfair/encrypt">Playfair Cipher</a>
+                            <a class="dropdown-item" href="/affine/encrypt">Affine Cipher</a>
+                            <a class="dropdown-item" href="/hill/encrypt">Hill Cipher</a>
+                        </div>
+                    </li><!-- Smaller devices menu END -->
+                </ul>
+            </div>
+        </nav><!-- NavBar END -->
+        
+        <!-- Bootstrap row -->
+        <div class="row" id="body-row">
+            <!-- Sidebar -->
+            <div id="sidebar-container" class="sidebar-expanded d-none d-md-block">
+                <!-- d-* hiddens the Sidebar in smaller devices. Its itens can be kept on the Navbar 'Menu' -->
+                <!-- Bootstrap List Group -->
+                <ul class="list-group">
+                    <!-- Menu with submenu -->
+                    <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="fa fa-key fa-fw mr-3"></span>
+                            <span class="menu-collapsed">Vigenere Cipher</span>
+                            <span class="submenu-icon ml-auto"></span>
+                        </div>
+                    </a>
+                    <!-- Submenu content -->
+                    <div id='submenu1' class="collapse sidebar-submenu">
+                        <a href="/vigenere/standard/encrypt" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Standard Vigenere Cipher</span>
+                        </a>
+                        <a href="/vigenere/full/encrypt" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Full Vigenere Cipher</span>
+                        </a>
+                        <a href="/vigenere/autokey/encrypt" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Auto Key Vigenere Cipher</span>
+                        </a>
+                        <a href="/vigenere/extended/encrypt" class="list-group-item list-group-item-action bg-dark text-white">
+                            <span class="menu-collapsed">Extended Vigenere Cipher</span>
+                        </a>
+                    </div>
+                    <a href="/playfair/encrypt" class="bg-dark list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="fa fa-key fa-fw mr-3"></span>
+                            <span class="menu-collapsed">Playfair Cipher</span>
+                        </div>
+                    </a>
+                    <a href="/affine/encrypt" class="bg-dark list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="fa fa-key fa-fw mr-3"></span>
+                            <span class="menu-collapsed">Affine Cipher</span>
+                        </div>
+                    </a>
+                    <a href="/hill/encrypt" class="bg-dark list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="fa fa-key fa-fw mr-3"></span>
+                            <span class="menu-collapsed">Hill Cipher</span>
+                        </div>
+                    </a>
+                </ul>
+            </div><!-- sidebar-container END -->
+            {% block body %}{% endblock %}
+        </div><!-- body-row END -->
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+        </script>
+        <script>
+            function handleFileSelect(event) {
+                const reader = new FileReader()
+                reader.onload = handleFileLoad;
+                reader.readAsText(event.target.files[0])
+            }
+
+            function handleFileLoad(event) {
+                console.log(event);
+                document.getElementById('text-input').value = event.target.result;
+            }            
+
+            document.getElementById('text-file-input').addEventListener('change', handleFileSelect, false);
+        </script>
+    </body>
+
+</html>
+<!DOCTYPE html>

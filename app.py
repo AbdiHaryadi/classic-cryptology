@@ -1,38 +1,118 @@
 from flask import *  
 from fileinput import filename
 from werkzeug.utils import secure_filename
+from algorithm.hillCipher import HillCipher
+from utils.utils import *
+import re
 import os
 
 UPLOAD_FOLDER = './upload'
+# DOWNLOAD_FOLDER = './result'
+
+def display5LetterGroup(text):
+    result = re.findall('.{1,5}', text)
+    result = ' '.join(result)
+    return result
+
 
 app = Flask(__name__)  
   
 @app.route('/')  
-def input():  
-   return render_template('hillCypherPage.html')  
+def index():  
+   return render_template('index.html')  
   
-@app.route('/hill',methods = ['GET', 'POST'])  
+@app.route('/hill/encrypt',methods = ['GET', 'POST'])  
 def hillCypher():
 #    method get buat nampilin plaintext sama cyphertext
    if request.method == 'POST':
       # other  
-      result = request.form
+      input = request.form
+      # ukuran kunci
+      key_size = int(input['text1'])
+      # isi key
+      key = formTextToArray(input['text2'],key_size)
+      # plaintext
+      plain = input['text3']
+      # display
+      display = input['inlineRadio']
       # file upload
-      files=request.files["upload"]
+      # files=request.files["upload"]
       # sanitize user input
-      filename = secure_filename(files.filename)
-      # file directory
-      file_direct = os.path.join(UPLOAD_FOLDER, filename)
-      # save file upload to upload folder
-      files.save(file_direct)
-      # read file txt
-      print("coba read")
-      with open(file_direct, 'r') as f:
-         lines = f.readlines()
-         print(lines)
+      # filename = secure_filename(files.filename)
+      # # file directory
+      # file_direct = os.path.join(UPLOAD_FOLDER, filename)
       
-      print("res",result)
-      return render_template("result.html",result = result)  
+      # download result directory
+      # ada if enc or decrypt harusnya
+      # DOWNLOAD_FOLDER = os.path.join('./result/encrypted/', filename)
+
+      # save file upload to upload folder
+      # files.save(file_direct)
+      # # read file txt
+      # print("coba read")
+      # plain = read_file(files)
+      # # read key
+
+
+      # Hill Cypher algorithm
+      hill = HillCipher(plain=plain, key=key)
+      print(hill.getKey())
+      # do cypher
+      hill.doEncryptAll()
+      cypher = ''.join(hill.getCypher())
+      print("res",input)
+      print("hasil", cypher)
+      print(hill.getKey())
+      return render_template("hill.html", mode="Encrypt", plaintext=plain, result=cypher, n=key_size, array=key, display=display)
    
+   return render_template("hill.html", mode="Encrypt", display="option1")
+
+
+@app.route('/hill/decrypt',methods = ['GET', 'POST'])  
+def hillDecrypt():
+#    method get buat nampilin plaintext sama cyphertext
+   if request.method == 'POST':
+      # other  
+      input = request.form
+      # ukuran kunci
+      key_size = int(input['text1'])
+      # isi key
+      key = formTextToArray(input['text2'],key_size)
+      # plaintext
+      cypher = input['text3']
+      # display
+      display = input['inlineRadio']
+      
+      # file handle
+
+      # Hill Cypher algorithm
+      hill = HillCipher(cypher=cypher, key=key)
+      print(hill.getKey())
+      # do cypher
+      hill.doDecryptAll()
+      plain = ''.join(hill.getPlain())
+      print("res",input)
+      print("hasil", plain)
+      print(hill.getKey())
+      # render_template("hill.html", mode="Decrypt", ciphertext=text, result=decipher_text, n=n, array=array, display=display)
+      return render_template("hill.html", mode="Decrypt", ciphertext=cypher, result=plain, n=key_size, array=key, display=display)
+   
+   return render_template("hill.html", mode="Decrypt", display="option1")
+
+
+
+
+
+
+# @app.route('/download')
+# def download():
+#     uploads = os.path.join(current_app.root_path, DOWNLOAD_FOLDER)
+#     return send_from_directory(directory=uploads, filename=filename)  
+
+# @app.route('/download')
+# def download_file():
+#    return send_file(DOWNLOAD_FOLDER, as_attachment=True)
+
 if __name__ == '__main__':  
+   app.config['TEMPLATES_AUTO_RELOAD'] = True
    app.run(debug = True)
