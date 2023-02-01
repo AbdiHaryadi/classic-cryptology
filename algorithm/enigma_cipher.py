@@ -138,6 +138,7 @@ class EnigmaCipher:
         return self.encrypt(ciphertext)
 
 if __name__ == "__main__":
+    key = input("Key (length of 3): ").upper()
     message = input("Message: ")
 
     cipher = EnigmaCipher(
@@ -146,7 +147,8 @@ if __name__ == "__main__":
             Rotor(letters="AJDKSIRUXBLHWTMCQGZNPYFVOE", notch="E"),
             Rotor(letters="BDFHJLCPRTXVZNYEIWGAKMUSQO", notch="V")
         ],
-        reflector=Reflector(letters="YRUHQSLDPXNGOKMIEBFZCWVJAT")
+        reflector=Reflector(letters="YRUHQSLDPXNGOKMIEBFZCWVJAT"),
+        initial_positions=key
     )
 
     ciphertext = cipher.encrypt(message)

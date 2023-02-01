@@ -57,10 +57,6 @@ class AutoKeyVigenereCipher:
             start_index += key_length
         return ciphertext_fragments
 
-    @property
-    def table(self):
-        return self._table.copy()
-
 if __name__ == "__main__":
     key = input("Key: ")
     message = input("Message: ")
@@ -70,5 +66,3 @@ if __name__ == "__main__":
     print("Ciphertext:", ciphertext)
     restored_message = cipher.decrypt(ciphertext)
     print("Restored message:", restored_message)
-
-    # Nanti hasilnya kalau dalam bentuk text, ada pilihan: pakai pembagian 5 karakter atau tidak.
