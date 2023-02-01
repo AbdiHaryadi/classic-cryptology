@@ -1,6 +1,5 @@
 from letters import Letters
 
-
 class AffineCipher:
     def __init__(self, scale_key: int, bias_key: int):
         if self._gcd(scale_key, 26) != 1:
