@@ -12,23 +12,23 @@
     <a class="btn btn-primary" href="/hill/encrypt" role="button">Encryption</a>
     <a class="btn btn-secondary" href="/hill/decrypt" role="button">Decryption</a>
     <div class="card">
-        <h5 class="card-header font-weight-light">Requirements</h5>
+        <h5 class="card-header font-weight-light">Input</h5>
         <div class="card-body">
             <form action="/hill/encrypt" method="POST">
                 <div class="form-group">
-                    <label for="text1">N (size of matrix)</label>
-                    <input type="number" class="form-control" name="text1" placeholder="Enter size of matrix here" value="{{n}}">
+                    <label for="text1">Ukuran Kunci (N), antara N = 2 atau N = 3</label>
+                    <input type="number" class="form-control" name="text1" placeholder="Masukkan Ukuran Kunci (N)" value="{{n}}">
                 </div>
                 <div class="form-group">
-                    <label for="text2">Matrix Element NxN(enter value seperated by space, e.g.: 1 2 3 4 5)</label>
-                    <input type="text" class="form-control" name="text2" placeholder="Enter matrix element here" value="{{array}}">
+                    <label for="text2">Kunci berupa Matrix NxN(Masukkan elemen matrik dipisahkan dengan spasi, ex : 1 2 3 4 5)</label>
+                    <input type="text" class="form-control" name="text2" placeholder="Masukkan elemen matrix disini" value="{{array}}">
                 </div>
                 <div class="form-group">
                     <label for="text3">Plaintext</label>
-                    <input type="text" class="form-control" name="text3" placeholder="Enter plaintext here" id="text-input" value="{{plaintext}}">
+                    <input type="text" class="form-control" name="text3" placeholder="Masukkan plaintext disini" id="text-input" value="{{plaintext}}">
                     <input type="file" class="form-control-file" name="file" id="text-file-input">
                 </div>
-                <label for="text2">Display Type</label>
+                <label for="text2">Tipe Display</label>
                 <div class="form-group">
                     <div class="form-check form-check-inline">
                         {% if display=="option1" %}
@@ -36,7 +36,7 @@
                         {% else %}
                         <input class="form-check-input" type="radio" name="inlineRadio" id="inlineRadio1" value="option1">
                         {% endif %}
-                        <label class="form-check-label" for="inlineRadio1">Without Space</label>
+                        <label class="form-check-label" for="inlineRadio1">Tanpa Spasi</label>
                     </div>
                     <div class="form-check form-check-inline">
                         {% if display=="option2" %}
@@ -44,22 +44,22 @@
                         {% else %}
                         <input class="form-check-input" type="radio" name="inlineRadio" id="inlineRadio2" value="option2">
                         {% endif %}
-                        <label class="form-check-label" for="inlineRadio2">5 Letter Groups</label>
+                        <label class="form-check-label" for="inlineRadio2">Kelompok 5 huruf</label>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Encipher Plaintext</button>
+                <button type="submit" class="btn btn-primary">Encrypt Plaintext</button>
             </form>
         </div>
     </div>
     <div class="card">
-        <h5 class="card-header font-weight-light">Result</h5>
+        <h5 class="card-header font-weight-light">Hasil</h5>
         <div class="card-body">
             <form action="/saveresult" method="POST">
                 <div class="form-group">    
                     <label for="text">Ciphertext</label>
                     <input type="text" readonly class="form-control" name="result" value="{{result}}">
                 </div>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary">Simpan Hasil</button>
             </form>
         </div>
     </div>
@@ -67,23 +67,23 @@
     <a class="btn btn-secondary" href="/hill/encrypt" role="button">Encryption</a>
     <a class="btn btn-primary" href="/hill/decrypt" role="button">Decryption</a>
     <div class="card">
-        <h5 class="card-header font-weight-light">Requirements</h5>
+        <h5 class="card-header font-weight-light">Input</h5>
         <div class="card-body">
             <form action="/hill/decrypt" method="POST">
                 <div class="form-group">
-                    <label for="text1">N (size of matrix)</label>
-                    <input type="number" class="form-control" name="text1" placeholder="Enter size of matrix here" value="{{n}}">
+                    <label for="text1">Ukuran Kunci (N), antara N = 2 atau N = 3</label>
+                    <input type="number" class="form-control" name="text1" placeholder="Masukkan Ukuran Kunci (N)" value="{{n}}">
                 </div>
                 <div class="form-group">
-                    <label for="text2">Matrix Element NxN(enter value seperated by space, e.g.: 1 2 3 4 5)</label>
-                    <input type="text" class="form-control" name="text2" placeholder="Enter matrix element here" value="{{array}}">
+                    <label for="text2">Kunci berupa Matrix NxN(Masukkan elemen matrik dipisahkan dengan spasi, ex : 1 2 3 4 5)</label>
+                    <input type="text" class="form-control" name="text2" placeholder="Masukkan elemen matrix disini" value="{{array}}">
                 </div>
                 <div class="form-group">
                     <label for="text3">Ciphertext</label>
-                    <input type="text" class="form-control" name="text3" placeholder="Enter ciphertext here" id="text-input" value="{{ciphertext}}">
+                    <input type="text" class="form-control" name="text3" placeholder="Masukkan ciphertext disini" id="text-input" value="{{ciphertext}}">
                     <input type="file" class="form-control-file" name="file" id="text-file-input">
                 </div>
-                <label for="text2">Display Type</label>
+                <label for="text2">Tipe Display</label>
                 <div class="form-group">
                     <div class="form-check form-check-inline">
                         {% if display=="option1" %}
@@ -91,7 +91,7 @@
                         {% else %}
                         <input class="form-check-input" type="radio" name="inlineRadio" id="inlineRadio1" value="option1">
                         {% endif %}
-                        <label class="form-check-label" for="inlineRadio1">Without Space</label>
+                        <label class="form-check-label" for="inlineRadio1">Tanpa Space</label>
                     </div>
                     <div class="form-check form-check-inline">
                         {% if display=="option2" %}
@@ -99,22 +99,22 @@
                         {% else %}
                         <input class="form-check-input" type="radio" name="inlineRadio" id="inlineRadio2" value="option2">
                         {% endif %}
-                        <label class="form-check-label" for="inlineRadio2">5 Letter Groups</label>
+                        <label class="form-check-label" for="inlineRadio2">Kelompok 5 huruf</label>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Decipher Ciphertext</button>
+                <button type="submit" class="btn btn-primary">Decrypt Ciphertext</button>
             </form>
         </div>
     </div>
     <div class="card">
-        <h5 class="card-header font-weight-light">Result</h5>
+        <h5 class="card-header font-weight-light">Hasil</h5>
         <div class="card-body">
             <form action="/saveresult" method="POST">
                 <div class="form-group">    
                     <label for="text">Plaintext</label>
                     <input type="text" readonly class="form-control" name="result" value="{{result}}">
                 </div>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary">Simpan Hasil</button>
             </form>
         </div>
     </div>

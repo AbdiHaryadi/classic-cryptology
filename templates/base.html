@@ -17,13 +17,10 @@
 
     <body>
         <!-- Bootstrap NavBar -->
-        <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+        <nav class="navbar navbar-expand-md navbar-dark bg-secondary">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="/">
-                <span class="menu-collapsed">Cypher</span>
-            </a>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
@@ -55,43 +52,39 @@
                 <!-- Bootstrap List Group -->
                 <ul class="list-group">
                     <!-- Menu with submenu -->
-                    <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+                    <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="bg-secondary list-group-item list-group-item-action flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-start align-items-center">
-                            <span class="fa fa-key fa-fw mr-3"></span>
                             <span class="menu-collapsed">Vigenere Cipher</span>
                             <span class="submenu-icon ml-auto"></span>
                         </div>
                     </a>
                     <!-- Submenu content -->
                     <div id='submenu1' class="collapse sidebar-submenu">
-                        <a href="/vigenere/standard/encrypt" class="list-group-item list-group-item-action bg-dark text-white">
+                        <a href="/vigenere/standard/encrypt" class="list-group-item list-group-item-action bg-secondary text-white">
                             <span class="menu-collapsed">Standard Vigenere Cipher</span>
                         </a>
-                        <a href="/vigenere/full/encrypt" class="list-group-item list-group-item-action bg-dark text-white">
+                        <a href="/vigenere/full/encrypt" class="list-group-item list-group-item-action bg-secondary text-white">
                             <span class="menu-collapsed">Full Vigenere Cipher</span>
                         </a>
-                        <a href="/vigenere/autokey/encrypt" class="list-group-item list-group-item-action bg-dark text-white">
+                        <a href="/vigenere/autokey/encrypt" class="list-group-item list-group-item-action bg-secondary text-white">
                             <span class="menu-collapsed">Auto Key Vigenere Cipher</span>
                         </a>
-                        <a href="/vigenere/extended/encrypt" class="list-group-item list-group-item-action bg-dark text-white">
+                        <a href="/vigenere/extended/encrypt" class="list-group-item list-group-item-action bg-secondary text-white">
                             <span class="menu-collapsed">Extended Vigenere Cipher</span>
                         </a>
                     </div>
-                    <a href="/playfair/encrypt" class="bg-dark list-group-item list-group-item-action">
+                    <a href="/playfair/encrypt" class="bg-secondary list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-start align-items-center">
-                            <span class="fa fa-key fa-fw mr-3"></span>
                             <span class="menu-collapsed">Playfair Cipher</span>
                         </div>
                     </a>
-                    <a href="/affine/encrypt" class="bg-dark list-group-item list-group-item-action">
+                    <a href="/affine/encrypt" class="bg-secondary list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-start align-items-center">
-                            <span class="fa fa-key fa-fw mr-3"></span>
                             <span class="menu-collapsed">Affine Cipher</span>
                         </div>
                     </a>
-                    <a href="/hill/encrypt" class="bg-dark list-group-item list-group-item-action">
+                    <a href="/hill/encrypt" class="bg-secondary list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-start align-items-center">
-                            <span class="fa fa-key fa-fw mr-3"></span>
                             <span class="menu-collapsed">Hill Cipher</span>
                         </div>
                     </a>
