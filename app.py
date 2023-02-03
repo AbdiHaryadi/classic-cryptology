@@ -10,19 +10,15 @@ from algorithm.auto_key_vigenere_cipher import AutoKeyVigenereCipher
 from algorithm.extended_vigenere_cipher import ExtendedVigenereCipher
 
 from utils.utils import *
+from utils.output_formatter import OutputFormatter
 import re
 import os
 
-UPLOAD_FOLDER = './upload'
-# DOWNLOAD_FOLDER = './result'
-
-def display5LetterGroup(text):
-    result = re.findall('.{1,5}', text)
-    result = ' '.join(result)
-    return result
-
-
-app = Flask(__name__)  
+app = Flask(__name__)
+output_formatter = OutputFormatter(
+   no_space_display_value="option1",
+   five_letters_group_display_value="option2"
+)
   
 @app.route('/')  
 def index():  
@@ -42,24 +38,7 @@ def hillCypher():
       plain = input['text3']
       # display
       display = input['inlineRadio']
-      # file upload
-      # files=request.files["upload"]
-      # sanitize user input
-      # filename = secure_filename(files.filename)
-      # # file directory
-      # file_direct = os.path.join(UPLOAD_FOLDER, filename)
-      
-      # download result directory
-      # ada if enc or decrypt harusnya
-      # DOWNLOAD_FOLDER = os.path.join('./result/encrypted/', filename)
-
-      # save file upload to upload folder
-      # files.save(file_direct)
-      # # read file txt
-      # print("coba read")
-      # plain = read_file(files)
-      # # read key
-
+      output_formatter.set_display(display)
 
       # Hill Cypher algorithm
       hill = HillCipher(plain=plain, key=key)
@@ -70,7 +49,9 @@ def hillCypher():
       print("res",input)
       print("hasil", cypher)
       print(hill.getKey())
-      return render_template("hill.html", mode="Encrypt", plaintext=plain, result=cypher, n=key_size, array=key_input, display=display)
+
+      result = output_formatter.format(cypher)
+      return render_template("hill.html", mode="Encrypt", plaintext=plain, result=result, n=key_size, array=key_input, display=display)
    
    return render_template("hill.html", mode="Encrypt", display="option1")
 
@@ -89,8 +70,7 @@ def hillDecrypt():
       cypher = input['text3']
       # display
       display = input['inlineRadio']
-      
-      # file handle
+      output_formatter.set_display(display)
 
       # Hill Cypher algorithm
       hill = HillCipher(cypher=cypher, key=key)
@@ -101,7 +81,9 @@ def hillDecrypt():
       print("res",input)
       print("hasil", plain)
       print(hill.getKey())
-      return render_template("hill.html", mode="Decrypt", ciphertext=cypher, result=plain, n=key_size, array=key_input, display=display)
+
+      result = output_formatter.format(plain)
+      return render_template("hill.html", mode="Decrypt", ciphertext=cypher, result=result, n=key_size, array=key_input, display=display)
    
    return render_template("hill.html", mode="Decrypt", display="option1")
 
@@ -117,15 +99,15 @@ def playfairCypher():
       plain = input['text3']
       # display
       display = input['inlineRadio']
-      
-      # file handle
+      output_formatter.set_display(display)
 
-      # playfair Cipher algorithm, , sementara ku Hill biar bisa jalan html nya :v
+      # playfair Cipher algorithm
       playfair = PlayfairCipher(key=key)
       # do cypher
       cypher = playfair.encrypt(plain)
       
-      return render_template("playfair.html", mode="Encrypt", plaintext=plain, result=cypher, key=key, display=display)
+      result = output_formatter.format(cypher)
+      return render_template("playfair.html", mode="Encrypt", plaintext=plain, result=result, key=key, display=display)
    
    return render_template("playfair.html", mode="Encrypt", display="option1")
 
@@ -140,16 +122,15 @@ def playfairDecrypt():
       cypher = input['text3']
       # display
       display = input['inlineRadio']
-      
-      # file handle
+      output_formatter.set_display(display)
 
-      # playfair algorithm, sementara ku Hill biar bisa jalan html nya :v
+      # playfair algorithm
       playfair = PlayFairCipher(key=key)
       # do decrypt
       plain = playfair.decrypt(cypher)
 
-
-      return render_template("playfair.html", mode="Decrypt", ciphertext=cypher, result=plain, key=key, display=display)
+      result = output_formatter.format(plain)
+      return render_template("playfair.html", mode="Decrypt", ciphertext=cypher, result=result, key=key, display=display)
    
    return render_template("playfair.html", mode="Decrypt", display="option1")
 
@@ -167,15 +148,15 @@ def affineCypher():
       plain = input['text3']
       # display
       display = input['inlineRadio']
-      
-      # file handle
+      output_formatter.set_display(display)
 
-      # Affine Cypher algorithm, sementara ku Hill biar bisa jalan html nya :v
+      # Affine Cypher algorithm
       affine = AffineCipher(scale_key=skala, bias_key=bias)
       # do cypher
       cypher = affine.encrypt(plain)
       
-      return render_template("affine.html", mode="Encrypt", plaintext=plain, result=cypher, skala=skala, bias=bias, display=display)
+      result = output_formatter.format(cypher)
+      return render_template("affine.html", mode="Encrypt", plaintext=plain, result=result, skala=skala, bias=bias, display=display)
    
    return render_template("affine.html", mode="Encrypt", display="option1")
 
@@ -194,16 +175,15 @@ def affineDecrypt():
       cypher = input['text3']
       # display
       display = input['inlineRadio']
-      
-      # file handle
+      output_formatter.set_display(display)
 
-      # Affine Cypher algorithm, sementara ku Hill biar bisa jalan html nya :v
+      # Affine Cypher algorithm
       affine = AffineCipher(scale_key=skala, bias_key= bias)
       # do decrypt
       plain = affine.decrypt(cypher)
 
-
-      return render_template("affine.html", mode="Decrypt", ciphertext=cypher, result=plain, skala=skala, bias=bias, display=display)
+      result = output_formatter.format(plain)
+      return render_template("affine.html", mode="Decrypt", ciphertext=cypher, result=result, skala=skala, bias=bias, display=display)
    
    return render_template("affine.html", mode="Decrypt", display="option1")
 
@@ -221,15 +201,15 @@ def standardVigenereCypher():
       plain = input['text3']
       # display
       display = input['inlineRadio']
-      
-      # file handle
+      output_formatter.set_display(display)
 
-      # playfair Cipher algorithm, , sementara ku Hill biar bisa jalan html nya :v
+      # Standard Vigenere Cipher algorithm
       standard = StandardVigenereCipher(key=key)
       # do cypher
       cypher = standard.encrypt(plain)
       
-      return render_template("standard.html", mode="Encrypt", plaintext=plain, result=cypher, key=key, display=display)
+      result = output_formatter.format(cypher)
+      return render_template("standard.html", mode="Encrypt", plaintext=plain, result=result, key=key, display=display)
    
    return render_template("standard.html", mode="Encrypt", display="option1")
 
@@ -245,16 +225,15 @@ def standardVigenereDecrypt():
       cypher = input['text3']
       # display
       display = input['inlineRadio']
-      
-      # file handle
+      output_formatter.set_display(display)
 
-      # playfair algorithm, sementara ku Hill biar bisa jalan html nya :v
+      # Standard Vigenere Cipher algorithm
       standard = StandardVigenereCipher(key=key)
       # do decrypt
       plain = standard.decrypt(cypher)
 
-
-      return render_template("standard.html", mode="Decrypt", ciphertext=cypher, result=plain, key=key, display=display)
+      result = output_formatter.format(plain)
+      return render_template("standard.html", mode="Decrypt", ciphertext=cypher, result=result, key=key, display=display)
    
    return render_template("standard.html", mode="Decrypt", display="option1")
 
@@ -271,15 +250,15 @@ def autoKeyVigenereCypher():
       plain = input['text3']
       # display
       display = input['inlineRadio']
-      
-      # file handle
+      output_formatter.set_display(display)
 
-      # playfair Cipher algorithm, , sementara ku Hill biar bisa jalan html nya :v
+      # Auto-Key Vigenere Cipher algorithm
       autokey = AutoKeyVigenereCipher(key=key)
       # do cypher
       cypher = autokey.encrypt(plain)
       
-      return render_template("autokey.html", mode="Encrypt", plaintext=plain, result=cypher, key=key, display=display)
+      result = output_formatter.format(cypher)
+      return render_template("autokey.html", mode="Encrypt", plaintext=plain, result=result, key=key, display=display)
    
    return render_template("autokey.html", mode="Encrypt", display="option1")
 
@@ -295,16 +274,15 @@ def autoKeyVigenereDecrypt():
       cypher = input['text3']
       # display
       display = input['inlineRadio']
-      
-      # file handle
+      output_formatter.set_display(display)
 
-      # playfair algorithm, sementara ku Hill biar bisa jalan html nya :v
+      # Auto Key Vigenere Cipher algorithm
       autokey = AutoKeyVigenereCipher(key=key)
       # do decrypt
       plain = autokey.decrypt(cypher)
 
-
-      return render_template("autokey.html", mode="Decrypt", ciphertext=cypher, result=plain, key=key, display=display)
+      result = output_formatter.format(plain)
+      return render_template("autokey.html", mode="Decrypt", ciphertext=cypher, result=result, key=key, display=display)
    
    return render_template("autokey.html", mode="Decrypt", display="option1")
 
@@ -320,15 +298,17 @@ def extendedVigenereCypher():
       plain = input['text3']
       # display
       display = input['inlineRadio']
+      output_formatter.set_display(display)
       
       # file handle
 
-      # playfair Cipher algorithm, , sementara ku Hill biar bisa jalan html nya :v
+      # Extended Vigenere Cipher algorithm
       extended = ExtendedVigenereCipher(key=key)
       # do cypher
       cypher = extended.encrypt(plain)
       
-      return render_template("extended.html", mode="Encrypt", plaintext=plain, result=cypher, key=key, display=display)
+      result = output_formatter.format(cypher)
+      return render_template("extended.html", mode="Encrypt", plaintext=plain, result=result, key=key, display=display)
    
    return render_template("extended.html", mode="Encrypt", display="option1")
 
@@ -344,16 +324,17 @@ def extendedVigenereDecrypt():
       cypher = input['text3']
       # display
       display = input['inlineRadio']
+      output_formatter.set_display(display)
       
       # file handle
 
-      # playfair algorithm, sementara ku Hill biar bisa jalan html nya :v
+      # Extended Vigenere Cipher algorithm
       extended = ExtendedVigenereCipher(key=key)
       # do decrypt
       plain = extended.decrypt(cypher)
 
-
-      return render_template("extended.html", mode="Decrypt", ciphertext=cypher, result=plain, key=key, display=display)
+      result = output_formatter.format(plain)
+      return render_template("extended.html", mode="Decrypt", ciphertext=cypher, result=result, key=key, display=display)
    
    return render_template("extended.html", mode="Decrypt", display="option1")
 
