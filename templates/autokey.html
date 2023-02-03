@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Standard Vigenere Cipher - {{mode}}</title>
+<title>Autokey Vigenere Cipher - {{mode}}</title>
 {% endblock %}
 
 {% block body %}
 <!-- MAIN -->
 <div class="col p-4">
-    <h1 class="display-4">Standard Vigenere Cipher</h1>
+    <h1 class="display-4">Autokey Vigenere Cipher</h1>
     {% if mode=="Encrypt" %}
-    <a class="btn btn-primary" href="/standard/encrypt" role="button">Encryption</a>
-    <a class="btn btn-secondary" href="/standard/decrypt" role="button">Decryption</a>
+    <a class="btn btn-primary" href="/autokey/encrypt" role="button">Encryption</a>
+    <a class="btn btn-secondary" href="/autokey/decrypt" role="button">Decryption</a>
     <div class="card">
         <h5 class="card-header font-weight-light">Input</h5>
         <div class="card-body">
-            <form action="/standard/encrypt" method="POST">
+            <form action="/autokey/encrypt" method="POST">
                 <div class="form-group">
                     <label for="text1">Kunci</label>
                     <input type="text" class="form-control" name="text1" placeholder="Masukkan Kunci, ex: abdifatchur" value="{{key}}">
@@ -60,12 +60,12 @@
         </div>
     </div>
     {% else %}
-    <a class="btn btn-secondary" href="/standard/encrypt" role="button">Encryption</a>
-    <a class="btn btn-primary" href="/standard/decrypt" role="button">Decryption</a>
+    <a class="btn btn-secondary" href="/autokey/encrypt" role="button">Encryption</a>
+    <a class="btn btn-primary" href="/autokey/decrypt" role="button">Decryption</a>
     <div class="card">
         <h5 class="card-header font-weight-light">Input</h5>
         <div class="card-body">
-            <form action="/standard/decrypt" method="POST">
+            <form action="/autokey/decrypt" method="POST">
                 <div class="form-group">
                     <label for="text1">Kunci</label>
                     <input type="text" class="form-control" name="text1" placeholder="Masukkan Kunci, ex: abdifatchur" value="{{key}}">
