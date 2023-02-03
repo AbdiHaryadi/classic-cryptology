@@ -8,6 +8,7 @@ from algorithm.affine_cipher import AffineCipher
 from algorithm.standard_vigenere_cipher import StandardVigenereCipher
 from algorithm.auto_key_vigenere_cipher import AutoKeyVigenereCipher
 from algorithm.extended_vigenere_cipher import ExtendedVigenereCipher
+from algorithm.enigma_cipher import *
 
 from utils.utils import *
 from utils.output_formatter import OutputFormatter
@@ -94,7 +95,7 @@ def playfairCypher():
       # other  
       input = request.form
       # ukuran kunci
-      key = int(input['text1'])
+      key = input['text1']
       # plaintext
       plain = input['text3']
       # display
@@ -117,7 +118,7 @@ def playfairDecrypt():
       # other  
       input = request.form
       # ukuran kunci
-      key = int(input['text1'])
+      key = input['text1']
       # plaintext
       cypher = input['text3']
       # display
@@ -125,7 +126,7 @@ def playfairDecrypt():
       output_formatter.set_display(display)
 
       # playfair algorithm
-      playfair = PlayFairCipher(key=key)
+      playfair = PlayfairCipher(key=key)
       # do decrypt
       plain = playfair.decrypt(cypher)
 
@@ -337,6 +338,75 @@ def extendedVigenereDecrypt():
       return render_template("extended.html", mode="Decrypt", ciphertext=cypher, result=result, key=key, display=display)
    
    return render_template("extended.html", mode="Decrypt", display="option1")
+
+@app.route('/enigma/encrypt',methods = ['GET', 'POST'])
+def enigmaCypher():
+   if request.method == 'POST':
+      # other  
+      input = request.form
+      # ukuran kunci
+      key = input['text1'].upper()
+      # plaintext
+      plain = input['text3']
+      # display
+      # display
+      display = input['inlineRadio']
+      output_formatter.set_display(display)
+      
+      # file handle
+
+      # Enigma Cipher algorithm, , sementara ku Hill biar bisa jalan html nya :v
+      enigma = EnigmaCipher(
+        rotors=[
+            Rotor(letters="EKMFLGDQVZNTOWYHXUSPAIBRCJ", notch="Q"),
+            Rotor(letters="AJDKSIRUXBLHWTMCQGZNPYFVOE", notch="E"),
+            Rotor(letters="BDFHJLCPRTXVZNYEIWGAKMUSQO", notch="V")
+        ],
+        reflector=Reflector(letters="YRUHQSLDPXNGOKMIEBFZCWVJAT"),
+        initial_positions=key
+    )
+      # do cypher
+      cypher = enigma.encrypt(plain)
+      
+      return render_template("enigma.html", mode="Encrypt", plaintext=plain, result=cypher, key=key, display=display)
+   
+   return render_template("enigma.html", mode="Encrypt", display="option1")
+
+
+@app.route('/enigma/decrypt',methods = ['GET', 'POST'])
+def enigmaDecrypt():
+   if request.method == 'POST':
+      # other  
+      input = request.form
+      # ukuran kunci
+      key = input['text1'].upper()
+      # plaintext
+      cypher = input['text3']
+      # display
+      display = input['inlineRadio']
+      output_formatter.set_display(display)
+      
+      # file handle
+
+      # Enigma
+      enigma = EnigmaCipher(
+        rotors=[
+            Rotor(letters="EKMFLGDQVZNTOWYHXUSPAIBRCJ", notch="Q"),
+            Rotor(letters="AJDKSIRUXBLHWTMCQGZNPYFVOE", notch="E"),
+            Rotor(letters="BDFHJLCPRTXVZNYEIWGAKMUSQO", notch="V")
+        ],
+        reflector=Reflector(letters="YRUHQSLDPXNGOKMIEBFZCWVJAT"),
+        initial_positions=key
+    )
+      # do decrypt
+      plain = enigma.decrypt(cypher)
+
+
+      return render_template("enigma.html", mode="Decrypt", ciphertext=cypher, result=plain, key=key, display=display)
+   
+   return render_template("enigma.html", mode="Decrypt", display="option1")
+
+
 
 
 # @app.route('/download')

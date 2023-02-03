@@ -1,5 +1,5 @@
 import string
-from letters import Letters
+from algorithm.letters import Letters
 
 class Rotor:
     def __init__(self, letters: str, notch="Z"):
