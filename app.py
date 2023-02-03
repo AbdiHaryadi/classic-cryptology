@@ -368,7 +368,8 @@ def enigmaCypher():
       # do cypher
       cypher = enigma.encrypt(plain)
       
-      return render_template("enigma.html", mode="Encrypt", plaintext=plain, result=cypher, key=key, display=display)
+      result = output_formatter.format(cypher)
+      return render_template("enigma.html", mode="Encrypt", plaintext=plain, result=result, key=key, display=display)
    
    return render_template("enigma.html", mode="Encrypt", display="option1")
 
@@ -401,8 +402,8 @@ def enigmaDecrypt():
       # do decrypt
       plain = enigma.decrypt(cypher)
 
-
-      return render_template("enigma.html", mode="Decrypt", ciphertext=cypher, result=plain, key=key, display=display)
+      result = output_formatter.format(plain)
+      return render_template("enigma.html", mode="Decrypt", ciphertext=cypher, result=result, key=key, display=display)
    
    return render_template("enigma.html", mode="Decrypt", display="option1")
 
