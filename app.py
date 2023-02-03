@@ -1,7 +1,11 @@
 from flask import *  
 from fileinput import filename
 from werkzeug.utils import secure_filename
+
 from algorithm.hillCipher import HillCipher
+# from algorithm.letters import Letters
+# from algorithm.affine_cipher import AffineCipher
+
 from utils.utils import *
 import re
 import os
@@ -23,7 +27,7 @@ def index():
   
 @app.route('/hill/encrypt',methods = ['GET', 'POST'])  
 def hillCypher():
-#    method get buat nampilin plaintext sama cyphertext
+
    if request.method == 'POST':
       # other  
       input = request.form
@@ -70,7 +74,7 @@ def hillCypher():
 
 @app.route('/hill/decrypt',methods = ['GET', 'POST'])  
 def hillDecrypt():
-#    method get buat nampilin plaintext sama cyphertext
+
    if request.method == 'POST':
       # other  
       input = request.form
@@ -99,7 +103,59 @@ def hillDecrypt():
    
    return render_template("hill.html", mode="Decrypt", display="option1")
 
+# @app.route('/affine/encrypt',methods = ['GET', 'POST'])  
+# def affineCypher():
 
+#    if request.method == 'POST':
+#       # other  
+#       input = request.form
+#       # ukuran kunci skala
+#       skala = int(input['text1'])
+#       # ukuran kunci bias 
+#       bias = int(input['text2'])
+#       # plaintext
+#       plain = input['text3']
+#       # display
+#       display = input['inlineRadio']
+      
+#       # file handle
+
+#       # Affine Cypher algorithm
+#       affine = AffineCipher(scale_key=skala, bias_key=bias)
+#       # do cypher
+#       cypher = affine.encrypt(plain)
+      
+#       return render_template("affine.html", mode="Encrypt", plaintext=plain, result=cypher, skala=skala, bias=bias, display=display)
+   
+#    return render_template("affine.html", mode="Encrypt", display="option1")
+
+
+# @app.route('/affine/decrypt',methods = ['GET', 'POST'])  
+# def affineDecrypt():
+
+#    if request.method == 'POST':
+#       # other  
+#       input = request.form
+#       # ukuran kunci skala
+#       skala = int(input['text1'])
+#       # ukuran kunci bias
+#       bias = int(input['text2'])
+#       # plaintext
+#       cypher = input['text3']
+#       # display
+#       display = input['inlineRadio']
+      
+#       # file handle
+
+#       # Hill Cypher algorithm
+#       affine = affineCypher(scale_key=skala, bias_key= bias)
+#       # do decrypt
+#       plain = affine.decrypt(cypher)
+
+
+#       return render_template("affine.html", mode="Decrypt", ciphertext=cypher, result=plain, skala=skala, bias=bias, display=display)
+   
+#    return render_template("affine.html", mode="Decrypt", display="option1")
 
 
 
