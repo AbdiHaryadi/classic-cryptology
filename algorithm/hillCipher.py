@@ -1,12 +1,12 @@
 import numpy as np
 from numpy.linalg import inv
 import string
-
+from algorithm.letters import Letters
 
 class HillCipher:
     def __init__(self, plain=None, cypher=None, key=None):
-        self.plain = plain if plain else np.array([])
-        self.cypher = cypher if cypher else np.array([])
+        self.plain = np.array([letter for letter in Letters("".join(plain))] if plain else [])
+        self.cypher = np.array([letter for letter in Letters("".join(cypher))] if cypher else [])
         self.key = key
         self.maxPartisi = 3 if (len(self.key)==3) else 2
 
