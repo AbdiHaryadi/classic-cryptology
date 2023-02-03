@@ -1,0 +1,1 @@
+Kami telah mengimplementasikan Standard Vigenere Cipher dengan baik

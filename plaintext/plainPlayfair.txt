@@ -1,0 +1,1 @@
+Kami telah mengimplementasikan Playfair Cipher dengan baik. Trigram AAA dan XXX tertangani dengan baik

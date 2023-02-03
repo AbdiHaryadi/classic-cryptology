@@ -1,0 +1,1 @@
+Kami telah mengimplementasikan Affine Cipher dengan baik

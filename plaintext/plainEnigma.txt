@@ -1,0 +1,1 @@
+Kami telah mengimplementasikan Enigma Cipher dengan baik. Pesan ini diperpanjang dengan mengulang kalimat awal sebanyak tiga kali untuk meninjau fungsionalitas rotor pertama. Kami telah mengimplementasikan Enigma Cipher dengan baik. Kami telah mengimplementasikan Enigma Cipher dengan baik. Kami telah mengimplementasikan Enigma Cipher dengan baik
