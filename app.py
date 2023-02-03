@@ -33,7 +33,8 @@ def hillCypher():
       # ukuran kunci
       key_size = int(input['text1'])
       # isi key
-      key = formTextToArray(input['text2'],key_size)
+      key_input = input['text2']
+      key = formTextToArray(key_input, key_size)
       # plaintext
       plain = input['text3']
       # display
@@ -66,7 +67,7 @@ def hillCypher():
       print("res",input)
       print("hasil", cypher)
       print(hill.getKey())
-      return render_template("hill.html", mode="Encrypt", plaintext=plain, result=cypher, n=key_size, array=key, display=display)
+      return render_template("hill.html", mode="Encrypt", plaintext=plain, result=cypher, n=key_size, array=key_input, display=display)
    
    return render_template("hill.html", mode="Encrypt", display="option1")
 
@@ -79,7 +80,8 @@ def hillDecrypt():
       # ukuran kunci
       key_size = int(input['text1'])
       # isi key
-      key = formTextToArray(input['text2'],key_size)
+      key_input = input['text2']
+      key = formTextToArray(key_input,key_size)
       # plaintext
       cypher = input['text3']
       # display
@@ -96,7 +98,7 @@ def hillDecrypt():
       print("res",input)
       print("hasil", plain)
       print(hill.getKey())
-      return render_template("hill.html", mode="Decrypt", ciphertext=cypher, result=plain, n=key_size, array=key, display=display)
+      return render_template("hill.html", mode="Decrypt", ciphertext=cypher, result=plain, n=key_size, array=key_input, display=display)
    
    return render_template("hill.html", mode="Decrypt", display="option1")
 
