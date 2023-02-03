@@ -1,7 +1,7 @@
 import string
 from itertools import chain
-from letters import Letters
-from standard_vigenere_table_generator import StandardVigenereTableGenerator
+from algorithm.letters import Letters
+from algorithm.standard_vigenere_table_generator import StandardVigenereTableGenerator
 
 class AutoKeyVigenereCipher:
     def __init__(self, key):

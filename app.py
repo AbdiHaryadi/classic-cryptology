@@ -5,6 +5,9 @@ from werkzeug.utils import secure_filename
 from algorithm.hillCipher import HillCipher
 from algorithm.playfair_cipher import PlayfairCipher
 from algorithm.affine_cipher import AffineCipher
+from algorithm.standard_vigenere_cipher import StandardVigenereCipher
+from algorithm.auto_key_vigenere_cipher import AutoKeyVigenereCipher
+from algorithm.extended_vigenere_cipher import ExtendedVigenereCipher
 
 from utils.utils import *
 import re
@@ -205,6 +208,154 @@ def affineDecrypt():
    return render_template("affine.html", mode="Decrypt", display="option1")
 
 
+
+
+@app.route('/standard/encrypt',methods = ['GET', 'POST'])
+def standardVigenereCypher():
+   if request.method == 'POST':
+      # other  
+      input = request.form
+      # ukuran kunci
+      key = input['text1']
+      # plaintext
+      plain = input['text3']
+      # display
+      display = input['inlineRadio']
+      
+      # file handle
+
+      # playfair Cipher algorithm, , sementara ku Hill biar bisa jalan html nya :v
+      standard = StandardVigenereCipher(key=key)
+      # do cypher
+      cypher = standard.encrypt(plain)
+      
+      return render_template("standard.html", mode="Encrypt", plaintext=plain, result=cypher, key=key, display=display)
+   
+   return render_template("standard.html", mode="Encrypt", display="option1")
+
+
+@app.route('/standard/decrypt',methods = ['GET', 'POST'])
+def standardVigenereDecrypt():
+   if request.method == 'POST':
+      # other  
+      input = request.form
+      # ukuran kunci
+      key = input['text1']
+      # plaintext
+      cypher = input['text3']
+      # display
+      display = input['inlineRadio']
+      
+      # file handle
+
+      # playfair algorithm, sementara ku Hill biar bisa jalan html nya :v
+      standard = StandardVigenereCipher(key=key)
+      # do decrypt
+      plain = standard.decrypt(cypher)
+
+
+      return render_template("standard.html", mode="Decrypt", ciphertext=cypher, result=plain, key=key, display=display)
+   
+   return render_template("standard.html", mode="Decrypt", display="option1")
+
+
+
+@app.route('/autokey/encrypt',methods = ['GET', 'POST'])
+def autoKeyVigenereCypher():
+   if request.method == 'POST':
+      # other  
+      input = request.form
+      # ukuran kunci
+      key = input['text1']
+      # plaintext
+      plain = input['text3']
+      # display
+      display = input['inlineRadio']
+      
+      # file handle
+
+      # playfair Cipher algorithm, , sementara ku Hill biar bisa jalan html nya :v
+      autokey = AutoKeyVigenereCipher(key=key)
+      # do cypher
+      cypher = autokey.encrypt(plain)
+      
+      return render_template("autokey.html", mode="Encrypt", plaintext=plain, result=cypher, key=key, display=display)
+   
+   return render_template("autokey.html", mode="Encrypt", display="option1")
+
+
+@app.route('/autokey/decrypt',methods = ['GET', 'POST'])
+def autoKeyVigenereDecrypt():
+   if request.method == 'POST':
+      # other  
+      input = request.form
+      # ukuran kunci
+      key = input['text1']
+      # plaintext
+      cypher = input['text3']
+      # display
+      display = input['inlineRadio']
+      
+      # file handle
+
+      # playfair algorithm, sementara ku Hill biar bisa jalan html nya :v
+      autokey = AutoKeyVigenereCipher(key=key)
+      # do decrypt
+      plain = autokey.decrypt(cypher)
+
+
+      return render_template("autokey.html", mode="Decrypt", ciphertext=cypher, result=plain, key=key, display=display)
+   
+   return render_template("autokey.html", mode="Decrypt", display="option1")
+
+
+@app.route('/extended/encrypt',methods = ['GET', 'POST'])
+def extendedVigenereCypher():
+   if request.method == 'POST':
+      # other  
+      input = request.form
+      # ukuran kunci
+      key = input['text1']
+      # plaintext
+      plain = input['text3']
+      # display
+      display = input['inlineRadio']
+      
+      # file handle
+
+      # playfair Cipher algorithm, , sementara ku Hill biar bisa jalan html nya :v
+      extended = ExtendedVigenereCipher(key=key)
+      # do cypher
+      cypher = extended.encrypt(plain)
+      
+      return render_template("extended.html", mode="Encrypt", plaintext=plain, result=cypher, key=key, display=display)
+   
+   return render_template("extended.html", mode="Encrypt", display="option1")
+
+
+@app.route('/extended/decrypt',methods = ['GET', 'POST'])
+def extendedVigenereDecrypt():
+   if request.method == 'POST':
+      # other  
+      input = request.form
+      # ukuran kunci
+      key = input['text1']
+      # plaintext
+      cypher = input['text3']
+      # display
+      display = input['inlineRadio']
+      
+      # file handle
+
+      # playfair algorithm, sementara ku Hill biar bisa jalan html nya :v
+      extended = ExtendedVigenereCipher(key=key)
+      # do decrypt
+      plain = extended.decrypt(cypher)
+
+
+      return render_template("extended.html", mode="Decrypt", ciphertext=cypher, result=plain, key=key, display=display)
+   
+   return render_template("extended.html", mode="Decrypt", display="option1")
 
 
 # @app.route('/download')
