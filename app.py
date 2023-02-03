@@ -1,6 +1,7 @@
 from flask import *  
 from fileinput import filename
 from werkzeug.utils import secure_filename
+from io import BytesIO
 
 from algorithm.hillCipher import HillCipher
 from algorithm.playfair_cipher import PlayfairCipher
@@ -295,21 +296,30 @@ def extendedVigenereCypher():
       input = request.form
       # ukuran kunci
       key = input['text1']
-      # plaintext
-      plain = input['text3']
-      # display
-      display = input['inlineRadio']
-      output_formatter.set_display(display)
+      key_in_bytes = bytes(key, encoding="ascii")
       
       # file handle
+      file = request.files["file"]
+      if file:
+         filename = secure_filename(file.filename)
+         encrypted_filename = filename + ".encrypted"
 
-      # Extended Vigenere Cipher algorithm
-      extended = ExtendedVigenereCipher(key=key)
-      # do cypher
-      cypher = extended.encrypt(plain)
+         plain: bytes = file.read()
+         # Extended Vigenere Cipher algorithm
+         extended = ExtendedVigenereCipher(key=key_in_bytes)
+         # do cypher
+         cypher = extended.encrypt(plain)
+
+         return send_file(
+            BytesIO(cypher),
+            as_attachment=True,
+            download_name=encrypted_filename
+         )
+
+      else:
+         print("Warning: No files detected.")
       
-      result = output_formatter.format(cypher)
-      return render_template("extended.html", mode="Encrypt", plaintext=plain, result=result, key=key, display=display)
+      return render_template("extended.html", mode="Encrypt", key=key)
    
    return render_template("extended.html", mode="Encrypt", display="option1")
 
@@ -321,21 +331,35 @@ def extendedVigenereDecrypt():
       input = request.form
       # ukuran kunci
       key = input['text1']
-      # plaintext
-      cypher = input['text3']
-      # display
-      display = input['inlineRadio']
-      output_formatter.set_display(display)
-      
-      # file handle
+      key_in_bytes = bytes(key, encoding="ascii")
 
-      # Extended Vigenere Cipher algorithm
-      extended = ExtendedVigenereCipher(key=key)
-      # do decrypt
-      plain = extended.decrypt(cypher)
+      # file handle
+      file = request.files["file"]
+      if file:
+         cypher: bytes = file.read()
+         filename = secure_filename(file.filename)
+         filename_match = re.match("(.*)\\.encrypted", filename)
+         if filename_match:
+            decrypted_filename = filename_match.group(1)
+         else:
+            decrypted_filename = filename + ".decrypted"
+
+         # Extended Vigenere Cipher algorithm
+         extended = ExtendedVigenereCipher(key=key_in_bytes)
+         # do decrypt
+         cypher = extended.decrypt(cypher)
+
+         return send_file(
+            BytesIO(cypher),
+            as_attachment=True,
+            download_name=decrypted_filename
+         )
+
+      else:
+         print("Warning: No files detected.")
 
       result = output_formatter.format(plain)
-      return render_template("extended.html", mode="Decrypt", ciphertext=cypher, result=result, key=key, display=display)
+      return render_template("extended.html", mode="Decrypt", key=key)
    
    return render_template("extended.html", mode="Decrypt", display="option1")
 
@@ -352,8 +376,6 @@ def enigmaCypher():
       # display
       display = input['inlineRadio']
       output_formatter.set_display(display)
-      
-      # file handle
 
       # Enigma Cipher algorithm, , sementara ku Hill biar bisa jalan html nya :v
       enigma = EnigmaCipher(
@@ -386,8 +408,6 @@ def enigmaDecrypt():
       # display
       display = input['inlineRadio']
       output_formatter.set_display(display)
-      
-      # file handle
 
       # Enigma
       enigma = EnigmaCipher(
