@@ -1,4 +1,4 @@
-from letters import Letters
+from algorithm.letters import Letters
 
 class AffineCipher:
     def __init__(self, scale_key: int, bias_key: int):

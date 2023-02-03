@@ -1,6 +1,6 @@
 from itertools import chain
 import string
-from letters import Letters
+from algorithm.letters import Letters
 
 class PlayfairTableGenerator:
     def generate(self, key: str):

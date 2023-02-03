@@ -3,8 +3,8 @@ from fileinput import filename
 from werkzeug.utils import secure_filename
 
 from algorithm.hillCipher import HillCipher
-# from algorithm.playfair_cipher import PlayfairCipher
-# from algorithm.affine_cipher import AffineCipher
+from algorithm.playfair_cipher import PlayfairCipher
+from algorithm.affine_cipher import AffineCipher
 
 from utils.utils import *
 import re
@@ -116,7 +116,7 @@ def playfairCypher():
       # file handle
 
       # playfair Cipher algorithm, , sementara ku Hill biar bisa jalan html nya :v
-      playfair = HillCipher(key=key)
+      playfair = PlayfairCipher(key=key)
       # do cypher
       cypher = playfair.encrypt(plain)
       
@@ -139,7 +139,7 @@ def playfairDecrypt():
       # file handle
 
       # playfair algorithm, sementara ku Hill biar bisa jalan html nya :v
-      playfair = HillCipher(key=key)
+      playfair = PlayFairCipher(key=key)
       # do decrypt
       plain = playfair.decrypt(cypher)
 
@@ -166,7 +166,7 @@ def affineCypher():
       # file handle
 
       # Affine Cypher algorithm, sementara ku Hill biar bisa jalan html nya :v
-      affine = HillCipher(scale_key=skala, bias_key=bias)
+      affine = AffineCipher(scale_key=skala, bias_key=bias)
       # do cypher
       cypher = affine.encrypt(plain)
       
@@ -193,7 +193,7 @@ def affineDecrypt():
       # file handle
 
       # Affine Cypher algorithm, sementara ku Hill biar bisa jalan html nya :v
-      affine = HillCipher(scale_key=skala, bias_key= bias)
+      affine = AffineCipher(scale_key=skala, bias_key= bias)
       # do decrypt
       plain = affine.decrypt(cypher)
 
