@@ -3,7 +3,7 @@ from fileinput import filename
 from werkzeug.utils import secure_filename
 
 from algorithm.hillCipher import HillCipher
-# from algorithm.letters import Letters
+# from algorithm.playfair_cipher import PlayfairCipher
 # from algorithm.affine_cipher import AffineCipher
 
 from utils.utils import *
@@ -27,7 +27,6 @@ def index():
   
 @app.route('/hill/encrypt',methods = ['GET', 'POST'])  
 def hillCypher():
-
    if request.method == 'POST':
       # other  
       input = request.form
@@ -74,7 +73,6 @@ def hillCypher():
 
 @app.route('/hill/decrypt',methods = ['GET', 'POST'])  
 def hillDecrypt():
-
    if request.method == 'POST':
       # other  
       input = request.form
@@ -98,64 +96,111 @@ def hillDecrypt():
       print("res",input)
       print("hasil", plain)
       print(hill.getKey())
-      # render_template("hill.html", mode="Decrypt", ciphertext=text, result=decipher_text, n=n, array=array, display=display)
       return render_template("hill.html", mode="Decrypt", ciphertext=cypher, result=plain, n=key_size, array=key, display=display)
    
    return render_template("hill.html", mode="Decrypt", display="option1")
 
-# @app.route('/affine/encrypt',methods = ['GET', 'POST'])  
-# def affineCypher():
 
-#    if request.method == 'POST':
-#       # other  
-#       input = request.form
-#       # ukuran kunci skala
-#       skala = int(input['text1'])
-#       # ukuran kunci bias 
-#       bias = int(input['text2'])
-#       # plaintext
-#       plain = input['text3']
-#       # display
-#       display = input['inlineRadio']
+@app.route('/playfair/encrypt',methods = ['GET', 'POST'])
+def playfairCypher():
+   if request.method == 'POST':
+      # other  
+      input = request.form
+      # ukuran kunci
+      key = int(input['text1'])
+      # plaintext
+      plain = input['text3']
+      # display
+      display = input['inlineRadio']
       
-#       # file handle
+      # file handle
 
-#       # Affine Cypher algorithm
-#       affine = AffineCipher(scale_key=skala, bias_key=bias)
-#       # do cypher
-#       cypher = affine.encrypt(plain)
+      # playfair Cipher algorithm, , sementara ku Hill biar bisa jalan html nya :v
+      playfair = HillCipher(key=key)
+      # do cypher
+      cypher = playfair.encrypt(plain)
       
-#       return render_template("affine.html", mode="Encrypt", plaintext=plain, result=cypher, skala=skala, bias=bias, display=display)
+      return render_template("playfair.html", mode="Encrypt", plaintext=plain, result=cypher, key=key, display=display)
    
-#    return render_template("affine.html", mode="Encrypt", display="option1")
+   return render_template("playfair.html", mode="Encrypt", display="option1")
 
-
-# @app.route('/affine/decrypt',methods = ['GET', 'POST'])  
-# def affineDecrypt():
-
-#    if request.method == 'POST':
-#       # other  
-#       input = request.form
-#       # ukuran kunci skala
-#       skala = int(input['text1'])
-#       # ukuran kunci bias
-#       bias = int(input['text2'])
-#       # plaintext
-#       cypher = input['text3']
-#       # display
-#       display = input['inlineRadio']
+@app.route('/playfair/decrypt',methods = ['GET', 'POST'])
+def playfairDecrypt():
+   if request.method == 'POST':
+      # other  
+      input = request.form
+      # ukuran kunci
+      key = int(input['text1'])
+      # plaintext
+      cypher = input['text3']
+      # display
+      display = input['inlineRadio']
       
-#       # file handle
+      # file handle
 
-#       # Hill Cypher algorithm
-#       affine = affineCypher(scale_key=skala, bias_key= bias)
-#       # do decrypt
-#       plain = affine.decrypt(cypher)
+      # playfair algorithm, sementara ku Hill biar bisa jalan html nya :v
+      playfair = HillCipher(key=key)
+      # do decrypt
+      plain = playfair.decrypt(cypher)
 
 
-#       return render_template("affine.html", mode="Decrypt", ciphertext=cypher, result=plain, skala=skala, bias=bias, display=display)
+      return render_template("playfair.html", mode="Decrypt", ciphertext=cypher, result=plain, key=key, display=display)
    
-#    return render_template("affine.html", mode="Decrypt", display="option1")
+   return render_template("playfair.html", mode="Decrypt", display="option1")
+
+@app.route('/affine/encrypt',methods = ['GET', 'POST'])  
+def affineCypher():
+
+   if request.method == 'POST':
+      # other  
+      input = request.form
+      # ukuran kunci skala
+      skala = int(input['text1'])
+      # ukuran kunci bias 
+      bias = int(input['text2'])
+      # plaintext
+      plain = input['text3']
+      # display
+      display = input['inlineRadio']
+      
+      # file handle
+
+      # Affine Cypher algorithm, sementara ku Hill biar bisa jalan html nya :v
+      affine = HillCipher(scale_key=skala, bias_key=bias)
+      # do cypher
+      cypher = affine.encrypt(plain)
+      
+      return render_template("affine.html", mode="Encrypt", plaintext=plain, result=cypher, skala=skala, bias=bias, display=display)
+   
+   return render_template("affine.html", mode="Encrypt", display="option1")
+
+
+@app.route('/affine/decrypt',methods = ['GET', 'POST'])  
+def affineDecrypt():
+
+   if request.method == 'POST':
+      # other  
+      input = request.form
+      # ukuran kunci skala
+      skala = int(input['text1'])
+      # ukuran kunci bias
+      bias = int(input['text2'])
+      # plaintext
+      cypher = input['text3']
+      # display
+      display = input['inlineRadio']
+      
+      # file handle
+
+      # Affine Cypher algorithm, sementara ku Hill biar bisa jalan html nya :v
+      affine = HillCipher(scale_key=skala, bias_key= bias)
+      # do decrypt
+      plain = affine.decrypt(cypher)
+
+
+      return render_template("affine.html", mode="Decrypt", ciphertext=cypher, result=plain, skala=skala, bias=bias, display=display)
+   
+   return render_template("affine.html", mode="Decrypt", display="option1")
 
 
 
